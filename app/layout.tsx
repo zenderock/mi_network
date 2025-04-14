@@ -7,8 +7,17 @@ import { AlertProvider } from "@/components/global/AlertProvider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Admin Réseau",
+  title: "MitNetwork. // Interface d'administration réseau",
   description: "Interface d'administration réseau",
+  keywords: [
+    "mitnetwork",
+    "interface d'administration réseau",
+    "administration réseau",
+  ],
+  openGraph: {
+    title: "MitNetwork. // Interface d'administration réseau",
+    description: "Interface d'administration réseau",
+  },
 };
 
 export default function RootLayout({

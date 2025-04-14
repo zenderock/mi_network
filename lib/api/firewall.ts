@@ -1,37 +1,22 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL
+import { fetchApi } from "@/lib/api";
 
 export const getFirewallRules = async () => {
-  const response = await fetch(`${API_URL}/api/firewall/`, {
-    headers: {
-      'Authorization': `Bearer ${localStorage.getItem('token')}`
-    }
-  })
-  return await response.json()
-}
+  return await fetchApi("/api/firewall/");
+};
 
 export const addFirewallRule = async (rule: {
-  protocol: string
-  port: string
-  action?: string
-  source?: string
+  protocol: string;
+  port: string;
+  action?: string;
+  source?: string;
 }) => {
-  const response = await fetch(`${API_URL}/api/firewall/`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${localStorage.getItem('token')}`
-    },
-    body: JSON.stringify(rule)
-  })
-  return await response.json()
-}
-
+  return await fetchApi("/api/firewall/", {
+    method: "POST",
+    body: JSON.stringify(rule),
+  });
+};
 export const deleteFirewallRule = async (ruleId: string) => {
-  const response = await fetch(`${API_URL}/api/firewall/${ruleId}`, {
-    method: 'DELETE',
-    headers: {
-      'Authorization': `Bearer ${localStorage.getItem('token')}`
-    }
+  return await fetchApi(`/api/firewall/${ruleId}`, {
+    method: "DELETE",
   })
-  return await response.json()
 }

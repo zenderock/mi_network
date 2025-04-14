@@ -24,7 +24,7 @@ export default function LoginPage() {
     e.preventDefault();
     try {
       const loginResponse = await login(email, password);
-      localStorage.setItem("token", loginResponse.access_token);
+      localStorage.setItem("authToken", loginResponse.access_token);
       router.push("/monitoring");
     } catch (err) {
       setError("Identifiants incorrects");

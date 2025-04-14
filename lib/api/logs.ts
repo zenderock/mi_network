@@ -1,29 +1,11 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
+import { fetchApi } from "@/lib/api";
 
 export const getSystemLogs = async (): Promise<string[]> => {
-  const response = await fetch(`${API_URL}/api/logs/system`, {
-    headers: {
-      'Authorization': `Bearer ${localStorage.getItem('token')}`,
-    },
-  });
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.error || 'Erreur lors de la récupération des logs système');
-  }
-  const data = await response.json();
+  const data = await fetchApi("/api/logs/system");
   return data.logs;
 };
 
 export const getAuthLogs = async (): Promise<string[]> => {
-  const response = await fetch(`${API_URL}/api/logs/auth`, {
-    headers: {
-      'Authorization': `Bearer ${localStorage.getItem('token')}`,
-    },
-  });
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.error || 'Erreur lors de la récupération des logs auth');
-  }
-  const data = await response.json();
+  const data = await fetchApi("/api/logs/auth");
   return data.logs;
 };

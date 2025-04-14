@@ -1,4 +1,4 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
+import { fetchApi } from "@/lib/api";
 
 interface NetworkUsage {
   bytes_sent_per_sec: number;
@@ -15,43 +15,13 @@ interface Connection {
 }
 
 export const getNetworkUsage = async (): Promise<NetworkUsage> => {
-  const response = await fetch(`${API_URL}/api/monitoring/network`, {
-    headers: {
-      'Authorization': `Bearer ${localStorage.getItem('token')}`,
-    },
-  });
-
-  if (!response.ok) {
-    throw new Error('Erreur lors de la récupération des statistiques réseau');
-  }
-
-  return response.json();
+  return await fetchApi("/api/monitoring/network");
 };
 
 export const getActiveConnections = async (): Promise<Connection[]> => {
-  const response = await fetch(`${API_URL}/api/monitoring/connections`, {
-    headers: {
-      'Authorization': `Bearer ${localStorage.getItem('token')}`,
-    },
-  });
-
-  if (!response.ok) {
-    throw new Error('Erreur lors de la récupération des connexions actives');
-  }
-
-  return response.json();
+  return await fetchApi("/api/monitoring/connections");
 };
 
 export const getSystemStats = async () => {
-  const response = await fetch(`${API_URL}/api/monitoring/system`, {
-    headers: {
-      'Authorization': `Bearer ${localStorage.getItem('token')}`,
-    },
-  });
-
-  if (!response.ok) {
-    throw new Error('Erreur lors de la récupération des statistiques système');
-  }
-
-  return response.json();
+  return await fetchApi("/api/monitoring/system");
 };

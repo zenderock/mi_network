@@ -1,4 +1,4 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
+import { fetchApi } from "@/lib/api";
 
 interface User {
   id: number;
@@ -8,17 +8,7 @@ interface User {
 }
 
 export const getUsers = async (): Promise<User[]> => {
-  const response = await fetch(`${API_URL}/api/users/`, {
-    headers: {
-      'Authorization': `Bearer ${localStorage.getItem('token')}`,
-    },
-  });
-
-  if (!response.ok) {
-    throw new Error('Erreur lors de la récupération des utilisateurs');
-  }
-
-  return response.json();
+  return await fetchApi("/api/users/");
 };
 
 export const createUser = async (userData: {
@@ -27,21 +17,10 @@ export const createUser = async (userData: {
   password: string;
   is_admin: boolean;
 }): Promise<User> => {
-  const response = await fetch(`${API_URL}/api/users/`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${localStorage.getItem('token')}`,
-    },
+  return await fetchApi("/api/users/", {
+    method: "POST",
     body: JSON.stringify(userData),
   });
-
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message || 'Erreur lors de la création de l\'utilisateur');
-  }
-
-  return response.json();
 };
 
 export const updateUser = async (
@@ -53,33 +32,14 @@ export const updateUser = async (
     is_admin: boolean;
   }>
 ): Promise<User> => {
-  const response = await fetch(`${API_URL}/api/users/${userId}`, {
-    method: 'PATCH',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${localStorage.getItem('token')}`,
-    },
+  return await fetchApi(`/api/users/${userId}`, {
+    method: "PATCH",
     body: JSON.stringify(userData),
   });
-
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message || 'Erreur lors de la mise à jour de l\'utilisateur');
-  }
-
-  return response.json();
 };
 
 export const deleteUser = async (userId: number): Promise<void> => {
-  const response = await fetch(`${API_URL}/api/users/${userId}`, {
-    method: 'DELETE',
-    headers: {
-      'Authorization': `Bearer ${localStorage.getItem('token')}`,
-    },
+  await fetchApi(`/api/users/${userId}`, {
+    method: "DELETE",
   });
-
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message || 'Erreur lors de la suppression de l\'utilisateur');
-  }
 };

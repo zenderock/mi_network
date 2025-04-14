@@ -4,9 +4,10 @@
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
 
-async function fetchApi(endpoint: string, options: RequestInit = {}) {
+export async function fetchApi(endpoint: string, options: RequestInit = {}) {
   const token = typeof window !== 'undefined' ? localStorage.getItem('authToken') : null;
-  
+    console.log("TOKEn: ", token);
+    
   const headers = {
     'Content-Type': 'application/json',
     ...(token && { Authorization: `Bearer ${token}` }),
@@ -17,7 +18,6 @@ async function fetchApi(endpoint: string, options: RequestInit = {}) {
     ...options,
     headers,
   });
-
   if (!response.ok) {
     let error;
     try {
@@ -25,6 +25,7 @@ async function fetchApi(endpoint: string, options: RequestInit = {}) {
     } catch (e) {
       error = {};
     }
+    
     if (error?.msg === 'Token has expired') {
       localStorage.removeItem('authToken');
       if (typeof window !== 'undefined') {

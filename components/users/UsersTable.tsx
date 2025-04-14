@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Edit, Trash2, User } from "lucide-react";
+import { Trash2, User } from "lucide-react";
 
 interface UsersTableProps {
   users: Array<{
@@ -58,15 +58,12 @@ export function UsersTable({ users, onDelete }: UsersTableProps) {
               </TableCell>
               <TableCell className="text-right">
                 <div className="flex justify-end space-x-2">
-                  <Button variant="outline" size="sm">
-                    <Edit className="h-4 w-4" />
-                  </Button>
                   <Button
                     variant="destructive"
                     size="sm"
                     onClick={() => onDelete(user.id)}
                   >
-                    <Trash2 className="h-4 w-4" />
+                    <Trash2 className="h-4 w-4 text-white" />
                   </Button>
                 </div>
               </TableCell>
