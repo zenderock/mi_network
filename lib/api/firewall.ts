@@ -1,7 +1,7 @@
 const API_URL = process.env.NEXT_PUBLIC_API_URL
 
 export const getFirewallRules = async () => {
-  const response = await fetch(`${API_URL}/api/firewall`, {
+  const response = await fetch(`${API_URL}/api/firewall/`, {
     headers: {
       'Authorization': `Bearer ${localStorage.getItem('token')}`
     }

@@ -8,7 +8,7 @@ interface User {
 }
 
 export const getUsers = async (): Promise<User[]> => {
-  const response = await fetch(`${API_URL}/api/users`, {
+  const response = await fetch(`${API_URL}/api/users/`, {
     headers: {
       'Authorization': `Bearer ${localStorage.getItem('token')}`,
     },

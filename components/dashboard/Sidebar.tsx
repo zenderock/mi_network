@@ -2,44 +2,28 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {
-  LayoutDashboard,
-  Shield,
-  Network,
-  Server,
-  Users,
-  FileText,
-} from "lucide-react";
+import { LayoutDashboard, Shield, Users, FileText } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navItems = [
   {
-    href: "/dashboard",
+    href: "/monitoring",
     icon: LayoutDashboard,
     label: "Tableau de bord",
   },
   {
-    href: "/dashboard/firewall",
+    href: "/firewall",
     icon: Shield,
     label: "Pare-feu",
   },
+
   {
-    href: "/dashboard/monitoring",
-    icon: Network,
-    label: "Monitoring",
-  },
-  {
-    href: "/dashboard/services",
-    icon: Server,
-    label: "Services",
-  },
-  {
-    href: "/dashboard/users",
+    href: "/users",
     icon: Users,
     label: "Utilisateurs",
   },
   {
-    href: "/dashboard/logs",
+    href: "/logs",
     icon: FileText,
     label: "Logs",
   },
