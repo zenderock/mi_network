@@ -15,7 +15,7 @@ interface Connection {
 }
 
 export const getNetworkUsage = async (): Promise<NetworkUsage> => {
-  const response = await fetch(`${API_URL}/api/monitoring/network-usage`, {
+  const response = await fetch(`${API_URL}/api/monitoring/network`, {
     headers: {
       'Authorization': `Bearer ${localStorage.getItem('token')}`,
     },

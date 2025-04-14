@@ -23,8 +23,9 @@ export default function LoginPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await login(email, password);
-      router.push("/dashboard");
+      const loginResponse = await login(email, password);
+      localStorage.setItem("token", loginResponse.access_token);
+      router.push("/monitoring");
     } catch (err) {
       setError("Identifiants incorrects");
     }
