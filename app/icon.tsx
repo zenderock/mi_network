@@ -22,6 +22,8 @@ export default function Icon() {
           alignItems: "center",
           justifyContent: "center",
           color: "white",
+          fontWeight: "bolder",
+          borderRadius: "50%",
         }}
       >
         M
