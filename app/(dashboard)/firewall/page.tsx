@@ -11,11 +11,13 @@ import { FirewallRulesTable } from "@/components/firewall/FirewallRulesTable";
 import { AddRuleModal } from "@/components/firewall/AddRuleModal";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { Alert } from "@/components/ui/alert";
 
 export default function FirewallPage() {
   const [rules, setRules] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   const fetchRules = async () => {
     setLoading(true);
@@ -38,8 +40,13 @@ export default function FirewallPage() {
       await addFirewallRule(rule);
       await fetchRules();
       setIsModalOpen(false);
-    } catch (error) {
+      setErrorMessage("");
+    } catch (error: any) {
       console.error(error);
+      setErrorMessage(
+        error?.message ||
+        "Erreur lors de l'ajout de la règle. Vérifiez les permissions du serveur."
+      );
     }
   };
 
@@ -64,6 +71,9 @@ export default function FirewallPage() {
           </div>
         </CardHeader>
         <CardContent>
+          {errorMessage && (
+            <Alert type="error" message={errorMessage} />
+          )}
           {loading ? (
             <div>Chargement...</div>
           ) : (

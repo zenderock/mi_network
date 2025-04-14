@@ -27,7 +27,7 @@ export const createUser = async (userData: {
   password: string;
   is_admin: boolean;
 }): Promise<User> => {
-  const response = await fetch(`${API_URL}/api/users`, {
+  const response = await fetch(`${API_URL}/api/users/`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 
@@ -18,8 +19,26 @@ async function fetchApi(endpoint: string, options: RequestInit = {}) {
   });
 
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message || 'Une erreur est survenue');
+    let error;
+    try {
+      error = await response.json();
+    } catch (e) {
+      error = {};
+    }
+    if (error?.msg === 'Token has expired') {
+      localStorage.removeItem('authToken');
+      if (typeof window !== 'undefined') {
+        // Affiche avec AlertProvider
+        import("@/lib/alert-client").then(({ showAlert }) => {
+          showAlert('Votre session a expiré. Veuillez vous reconnecter.', 'error');
+          setTimeout(() => {
+            window.location.href = '/login';
+          }, 1500);
+        });
+      }
+      throw new Error('Votre session a expiré. Veuillez vous reconnecter.');
+    }
+    throw new Error(error?.message || error?.msg || 'Une erreur est survenue');
   }
 
   if (response.status === 204) {

@@ -15,7 +15,7 @@ export const addFirewallRule = async (rule: {
   action?: string
   source?: string
 }) => {
-  const response = await fetch(`${API_URL}/api/firewall`, {
+  const response = await fetch(`${API_URL}/api/firewall/`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
