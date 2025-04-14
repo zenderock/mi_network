@@ -2,7 +2,7 @@ import { jwtDecode } from 'jwt-decode'
 import { User } from './auth-types'
 
 export class AuthServiceClient {
-  private static readonly TOKEN_KEY = 'auth_token'
+  private static readonly TOKEN_KEY = 'authToken'
   private static readonly USER_KEY = 'auth_user'
 
   static getClientUser(): User | null {

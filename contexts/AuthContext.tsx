@@ -11,6 +11,7 @@ import {
 } from "react";
 import { AuthServiceClient } from "@/lib/auth-client";
 import { User } from "@/lib/auth-types";
+import { getCurrentUser } from "@/lib/api/auth";
 
 interface AuthContextType {
   user: User | null;
@@ -35,7 +36,20 @@ export function AuthProvider({
   const [loading, setLoading] = useState(!initialUser);
 
   useEffect(() => {
-    if (!initialUser) {
+    const token =
+      typeof window !== "undefined" ? localStorage.getItem("authToken") : null;
+    if (!initialUser && token) {
+      // Appel API pour récupérer l'utilisateur courant
+      getCurrentUser(token)
+        .then((apiUser) => {
+          setUser(apiUser);
+        })
+        .catch(() => {
+          setUser(null);
+          window.location.href = "/login";
+        })
+        .finally(() => setLoading(false));
+    } else if (!initialUser) {
       const currentUser = AuthServiceClient.getClientUser();
       setUser(currentUser);
       setLoading(false);
@@ -48,6 +62,7 @@ export function AuthProvider({
       setUser(user);
       return user; // Retourne explicitement l'utilisateur
     } catch (error) {
+      window.location.href = "/login";
       throw error;
     }
   };

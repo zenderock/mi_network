@@ -6,7 +6,11 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/a
 
 export async function fetchApi(endpoint: string, options: RequestInit = {}) {
   const token = typeof window !== 'undefined' ? localStorage.getItem('authToken') : null;
-    console.log("TOKEn: ", token);
+  
+  if(!token) {
+    window.location.href = "/login";
+    return;
+  }
     
   const headers = {
     'Content-Type': 'application/json',
